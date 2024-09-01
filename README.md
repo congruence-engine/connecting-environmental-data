@@ -47,14 +47,13 @@ Data sources (used or developed)
 
 
 
-## Method
+## Investigation methods/ tools/ code/ software (used or developed)
 
-Investigation methods/ tools/ code/ software (used or developed)
-OCR: ABBYY Finereader
-ChatGPT
-Neo4j
-QGIS
-Felt maps
+- OCR: ABBYY Finereader
+- ChatGPT
+- Neo4j
+- QGIS
+- Felt maps
 
 
 ## Outputs  
