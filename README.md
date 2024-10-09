@@ -7,18 +7,28 @@ This investigation processed a small sample of documents relating to the history
 
 ## People 
 
-Max Long (Research Fellow , Science Museum) : Conceptualization, Investigation, Formal Analysis, Data Curation, Software, Writing
+**Max Long**  
+
+Conceptualization, Investigation, Formal Analysis, Data Curation, Software, Writing
 
 
-Tasha Kitcher (Research Fellow , Science Museum) : Conceptualization, Investigation, Formal Analysis, Data Curation, Software, Writing, Visualization
+**Tasha Kitcher** 
+
+Conceptualization, Investigation, Formal Analysis, Data Curation, Software, Writing, Visualization
 
 
-Daniel Belteki (Research Fellow , Science Museum): Data Curation, Writing
+**Daniel Belteki** 
+
+Data Curation, Writing
 
 
-Robert Hellawell: Resources, Investigation, Writing
+**Robert Hellawell**
 
-Nayomi Kasthuri Arachchi (Research Fellow , Science Museum) : Software
+Resources, Investigation, Writing
+
+**Nayomi Kasthuri Arachchi** 
+
+Software
 
 
 ## Licence 
