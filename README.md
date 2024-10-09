@@ -14,21 +14,30 @@ This investigation processed a small sample of documents relating to the history
 - How can CE’s digital and social machine methodologies help community groups in Bradford to access and use information about Bradford’s environmental history?
 
 
-## People
 
-#### Max Long (Research Fellow , Science Museum) :
-Conceptualization, Investigation, Formal Analysis, Data Curation, Software, Writing 
+## People 
 
-#### Tasha Kitcher (Research Fellow , Science Museum) : 
-Conceptualization, Investigation, Formal Analysis, Data Curation, Software, Writing, Visualization  
+**Max Long**  
 
-#### Daniel Belteki (Research Fellow , Science Museum): 
+Conceptualization, Investigation, Formal Analysis, Data Curation, Software, Writing
+
+
+**Tasha Kitcher** 
+
+Conceptualization, Investigation, Formal Analysis, Data Curation, Software, Writing, Visualization
+
+
+**Daniel Belteki** 
+
 Data Curation, Writing
 
-#### Robert Hellawell: 
+
+**Robert Hellawell**
+
 Resources, Investigation, Writing
 
-#### Nayomi Kasthuri Arachchi (Research Fellow , Science Museum) :
+**Nayomi Kasthuri Arachchi** 
+
 Software
 
 
