@@ -66,3 +66,8 @@ Software
 - Database of mills and their responses to 1871 River Pollution Report (Excel spreadsheet)
 - Neo4j database
 - Book chapter: ‘Towards a natural collection: digital and community histories of river pollution in Bradford’
+
+
+
+## Licence 
+This work is licensed under a [Creative Commons Attribution 4.0 License - CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
