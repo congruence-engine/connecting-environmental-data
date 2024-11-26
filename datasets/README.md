@@ -19,7 +19,7 @@ The varying cartographical representation of these features has meant that we ha
 These datasets, then, represent a modern *interpretation* of this earlier 19th cartographical project, driven by the desire to better understand the changing shape of Bradford's water infrastructure from the perspective of environmental history and industrial heritage. While they aim to document in as much detail as possible the watercourses, millponds, reservoirs and ponds depicted on publicly-available maps of Bradford between 1852 and 1909, they will no doubt contain ocassional errors or inconsistencies.
 
 ## Description
-Each folder refers to an individual series of map layers from the National Library of Scotland's collection. Below you can find more information about the corresponding maps:
+Each folder refers to an individual collection of georeferenced map tiles from the National Library of Scotland. Below you can find more information about the corresponding maps:
 
 *   **1852 (Town Plan)**: [Ordnance Survey Town Plans of England and Wales, 1840s-1890s: Bradford, 1:1,056, Surveyed: 1848, Published: 1852](https://maps.nls.uk/os/townplans-england/bradford-1056.html)
 *   **1852 (6 inch)**: [Ordnance Survey Maps - Six-inch England and Wales, First Edition, Yorkshire, Surveyed: 1847-50, Published: 1852](https://maps.nls.uk/os/6inch-england-and-wales/)
@@ -29,7 +29,7 @@ Each folder refers to an individual series of map layers from the National Libra
 *   **1908**: [Ordnance Survey Maps - 25 inch England and Wales, 1841-1952, Revised: 1905-6, Published: 1908](https://maps.nls.uk/os/25inch-england-and-wales/)
 *   **1909**: [Ordnance Survey Maps - Six-inch England and Wales, Second Edition, Revised: 1905-6, Published: 1909](https://maps.nls.uk/os/6inch-england-and-wales/)
 
-Each folder contains two GEOJSON files:
+Each folder contains two GeoJSON files:
 
 
 *   **Watercourses**: This file contains vector line features for watercourses identified on the relevant basemap. These include rivers, becks, drains, canals and other watercourses. Each line has the following attributes:
