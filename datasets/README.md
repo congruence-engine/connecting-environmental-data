@@ -1,4 +1,4 @@
-# Bradford Becks and Millponds Datasets, 1848-1909
+# Bradford Becks and Millponds Datasets, 1852-1909
 
 These datasets consist of GeoJSON files produced as part of the Congruence Engine Project (2021-25) at the Science Museum Group. 
 
