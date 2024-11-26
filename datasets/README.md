@@ -5,19 +5,18 @@ These datasets consist of GeoJSON files produced as part of the Congruence Engin
 ## Introduction
 The datasets were produced in collaboration with the local campaign group [Friends of Bradford's Becks](https://bradford-beck.org/) and Robert Hellawell from the [Aire Rivers Trust](https://aireriverstrust.org.uk/). 
 
-The purpose of the datasets was to produce a more accurate picture of how Bradford's watercourses have changed over time, with particular attention being paid to the connections between the textile industry and river pollution in the late 19th and early 20th centuries. The results of this research will be published at a later date, as part of Congruence Engine's outputs. 
+The purpose of the datasets was to produce a more accurate picture of how Bradford's watercourses have changed over time, with particular attention being paid to the connections between the textile industry and river pollution in the late 19th and early 20th centuries. The datasets are intended to be of use to historians, environmental activists, and other people interested in the changes to Bradford's natural environment in the nineteenth and twentieth centuries.
 
 The maps were created using QGIS as well as Felt, with historic tile layers loaded from the [National Library of Scotland's collection of Maps](https://maps.nls.uk/). Some are provided directly by the NLS, while others can be accessed via [MapTiler](https://www.maptiler.com/). 
 
-## A word of warning
+## A word of caution
 Maps are never 'objective' or impartial depictions of the lay of the land at a given point in time. They are highly ideological representations of space created from a particular vantage point. The Ordnance Survey (OS) maps used for most of these datasets were the product of a long-term, state-sponsored project of geographical surveying in the nineteenth century. As such, cartography was a tool of governance which helped to standardise administrative boundaries, delimit the bounds of private and public property, as well as raise taxes. 
 
 The representation of natural features like rivers in the OS maps used here varies in both form and level of detail. The extent to which natural features, and artificial features for the exploitation of natural resources like water, appear in these maps is to some degree an illustration of their economic significance. 
 
 The varying cartographical representation of these features has meant that we have often had to make judgements and educated guesses. For instance, in some of the maps streams and becks are sometimes represented by single lines that are difficult to distinguish from property and other boundaries. Comparison between different maps has helped us to reach judgements about these and other ambiguities, but the resulting datasets will no doubt contain flaws of their own. 
 
-These datasets, then, represent a modern *interpretation* of this earlier 19th cartographical project, driven by the desire to better understand the changing shape of Bradford's water infrastructure from the perspective of environmental history and industrial heritage. 
-
+These datasets, then, represent a modern *interpretation* of this earlier 19th cartographical project, driven by the desire to better understand the changing shape of Bradford's water infrastructure from the perspective of environmental history and industrial heritage. While they aim to document in as much detail as possible the watercourses, millponds, reservoirs and ponds depicted on publicly-available maps of Bradford between 1852 and 1909, they will no doubt contain ocassional errors or inconsistencies.
 
 ## Description
 Each folder refers to an individual series of map layers from the National Library of Scotland's collection. Below you can find more information about the corresponding maps:
