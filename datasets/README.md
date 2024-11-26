@@ -7,10 +7,10 @@ The datasets were produced in collaboration with the local campaign group [Frien
 
 The purpose of the datasets was to produce a more accurate picture of how Bradford's watercourses have changed over time, with particular attention being paid to the connections between the textile industry and river pollution in the late 19th and early 20th centuries. The results of this research will be published at a later date, as part of Congruence Engine's outputs. 
 
-The maps were created using QGIS as well as Felt, with historic tile layers loaded from the [National Library of Scotland's collection of Ordnance Survey Maps](https://maps.nls.uk/os/). Some are provided directly by the NLS, while others can be accessed via [MapTiler](https://www.maptiler.com/). 
+The maps were created using QGIS as well as Felt, with historic tile layers loaded from the [National Library of Scotland's collection of Maps](https://maps.nls.uk/). Some are provided directly by the NLS, while others can be accessed via [MapTiler](https://www.maptiler.com/). 
 
 ## A word of warning
-Maps are never 'objective' or impartial depictions of the lay of the land at a given point in time. They are highly ideological representations of space created from a particular vantage point. The Ordnance Survey (OS) maps used for these datasets were the product of a long-term, state-sponsored project of geographical surveying in the nineteenth century. As such, cartography was a tool of governance which helped to standardise administrative boundaries, delimit the bounds of private and public property, as well as raise taxes. 
+Maps are never 'objective' or impartial depictions of the lay of the land at a given point in time. They are highly ideological representations of space created from a particular vantage point. The Ordnance Survey (OS) maps used for most of these datasets were the product of a long-term, state-sponsored project of geographical surveying in the nineteenth century. As such, cartography was a tool of governance which helped to standardise administrative boundaries, delimit the bounds of private and public property, as well as raise taxes. 
 
 The representation of natural features like rivers in the OS maps used here varies in both form and level of detail. The extent to which natural features, and artificial features for the exploitation of natural resources like water, appear in these maps is to some degree an illustration of their economic significance. 
 
@@ -22,10 +22,12 @@ These datasets, then, represent a modern *interpretation* of this earlier 19th c
 ## Description
 Each folder refers to an individual series of map layers from the National Library of Scotland's collection. Below you can find more information about the corresponding maps:
 
-*   **1848**: [Ordnance Survey Town Plans of England and Wales, 1840s-1890s: Bradford, 1:1,056, Surveyed: 1848, Published: 1852](https://maps.nls.uk/os/townplans-england/bradford-1056.html)
-*   **1852**: [Ordnance Survey Maps - Six-inch England and Wales, First Edition, Yorkshire, Surveyed: 1847-50, Published: 1852 ](https://maps.nls.uk/os/6inch-england-and-wales/)
-*   **1891**:  [Ordnance Survey Town Plans of England and Wales, 1840s-1890s: Bradford, 1:500, Surveyed: 1889-91, Published: 1891 ](https://maps.nls.uk/os/townplans-england/bradford.html)
-*   **1908**: [Ordnance Survey Maps - 25 inch England and Wales, 1841-1952, Revised: 1905-6, Published: 1908 ](https://maps.nls.uk/os/25inch-england-and-wales/)
+*   **1852 (Town Plan)**: [Ordnance Survey Town Plans of England and Wales, 1840s-1890s: Bradford, 1:1,056, Surveyed: 1848, Published: 1852](https://maps.nls.uk/os/townplans-england/bradford-1056.html)
+*   **1852 (6 inch)**: [Ordnance Survey Maps - Six-inch England and Wales, First Edition, Yorkshire, Surveyed: 1847-50, Published: 1852](https://maps.nls.uk/os/6inch-england-and-wales/)
+*   **1873**: [Walker & Virr, Plan of the Borough of Bradford, 1873](https://maps.nls.uk/towns/rec/11845)
+*   **1880**: [John Hart, Block plan of the town of Bradford, c. 1880](https://maps.nls.uk/towns/rec/11846)
+*   **1891**:  [Ordnance Survey Town Plans of England and Wales, 1840s-1890s: Bradford, 1:500, Surveyed: 1889-91, Published: 1891](https://maps.nls.uk/os/townplans-england/bradford.html)
+*   **1908**: [Ordnance Survey Maps - 25 inch England and Wales, 1841-1952, Revised: 1905-6, Published: 1908](https://maps.nls.uk/os/25inch-england-and-wales/)
 *   **1909**: [Ordnance Survey Maps - Six-inch England and Wales, Second Edition, Revised: 1905-6, Published: 1909](https://https://maps.nls.uk/os/6inch-england-and-wales/)
 
 Each folder contains two GEOJSON files:
@@ -49,16 +51,17 @@ Each folder contains two GEOJSON files:
         *   'undetermined': where no clear type is identifiable.
 
 ## Usage & Tile Links
-The datasets are intended for use with corresponding basemap tiles. The table below provides links to these tyles, which can be loaded in GIS desktop software like QGIS, or via online services like Felt. Most can be used a TileJSON, WMTS, or XYZ layers. 
-
+The datasets are intended for use with corresponding basemap tiles. The table below provides links to these tyles, which can be loaded in GIS desktop software like QGIS, or via online services like Felt. Most can be used a TileJSON, WMTS, or XYZ layers. The 1873 and 1880 maps have been georeferenced using AllMaps, and are available as XYZ tiles via the links provided. 
 
 | Year | Scale | Tile Link |
 |------|-------|-----------|
-|1848 | 1:1,056 | [NLS](https://mapseries-tilesets.s3.amazonaws.com/os/town-england/Bradford/index.html#Bradford/ol3.) |
-|1852 | 6-inch | [NLS](https://www.google.com/url?q=https%3A%2F%2Fmapseries-tilesets.s3.amazonaws.com%2Fos%2Fsix-inch-yorkshire%2Findex.html%23six-inch-yorkshireN-new%2Fol3)|
+|1852 (Town Plan) | 1:1,056 | [NLS](https://mapseries-tilesets.s3.amazonaws.com/os/town-england/Bradford/index.html#Bradford/ol3.) |
+|1852 (6 inch) | 6-inch (1:10,560) | [NLS](https://www.google.com/url?q=https%3A%2F%2Fmapseries-tilesets.s3.amazonaws.com%2Fos%2Fsix-inch-yorkshire%2Findex.html%23six-inch-yorkshireN-new%2Fol3)|
+|1873 | 1:10,560 | [NLS via AllMaps](https://allmaps.xyz/maps/682c0c5a6a17c868/{z}/{x}/{y}.png)|
+|1880 | 1:4,281 | [NLS via AllMaps](https://allmaps.xyz/maps/20b4442417495cda/{z}/{x}/{y}.png)|
 |1891 | 1:500 | [NLS](https://www.google.com/url?q=https%3A%2F%2Fmapseries-tilesets.s3.amazonaws.com%2Fos%2Ftown-england%2FNorth%2Findex.html%23North_new%2Fol3)|
-| 1908 | 25-inch | [NLS](https://www.google.com/url?q=https%3A%2F%2Fmapseries-tilesets.s3.amazonaws.com%2F25_inch%2Fyorkshire%2Findex.html%23yorkshire_new%2Fol3) |
-| 1909 | 6-inch | [MapTiler](https://www.google.com/url?q=https%3A%2F%2Fcloud.maptiler.com%2Ftiles%2Fuk-osgb10k1888%2F)|
+| 1908 | 25-inch (1:2,500) | [NLS](https://www.google.com/url?q=https%3A%2F%2Fmapseries-tilesets.s3.amazonaws.com%2F25_inch%2Fyorkshire%2Findex.html%23yorkshire_new%2Fol3) |
+| 1909 | 6-inch (1:10,560) | [NLS via MapTiler](https://www.google.com/url?q=https%3A%2F%2Fcloud.maptiler.com%2Ftiles%2Fuk-osgb10k1888%2F)|
 
 ## Example Maps
 
