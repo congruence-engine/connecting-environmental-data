@@ -28,7 +28,7 @@ Each folder refers to an individual series of map layers from the National Libra
 *   **1880**: [John Hart, Block plan of the town of Bradford, c. 1880](https://maps.nls.uk/towns/rec/11846)
 *   **1891**:  [Ordnance Survey Town Plans of England and Wales, 1840s-1890s: Bradford, 1:500, Surveyed: 1889-91, Published: 1891](https://maps.nls.uk/os/townplans-england/bradford.html)
 *   **1908**: [Ordnance Survey Maps - 25 inch England and Wales, 1841-1952, Revised: 1905-6, Published: 1908](https://maps.nls.uk/os/25inch-england-and-wales/)
-*   **1909**: [Ordnance Survey Maps - Six-inch England and Wales, Second Edition, Revised: 1905-6, Published: 1909](https://https://maps.nls.uk/os/6inch-england-and-wales/)
+*   **1909**: [Ordnance Survey Maps - Six-inch England and Wales, Second Edition, Revised: 1905-6, Published: 1909](https://maps.nls.uk/os/6inch-england-and-wales/)
 
 Each folder contains two GEOJSON files:
 
