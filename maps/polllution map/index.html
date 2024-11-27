@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map with Filters and Fixed Info Box</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        /* Reset default margins and paddings */
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Container for the map */
+        #map-container {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Map styling */
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        /* Styling for the layer control title */
+.layer-control-title {
+    background: transparent; 
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px; /* Space between title and layer options */
+    border-radius: 5px 5px 0 0; /* Rounds the top corners */
+}
+
+                    /* Styling for watercourse filter buttons */
+            .watercourse-buttons {
+                position: absolute;
+                top: 70px; /* Adjust as needed to position below other elements */
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1000;
+                background-color: rgba(255, 255, 255, 0.8);
+                padding: 5px;
+                border-radius: 5px;
+                display: flex;
+                font-size: 10px;
+                justify-content: center;
+            }
+
+            .watercourse-button {
+                display: inline-block;
+                margin: 0 5px;
+                padding: 12px;
+                color: white;
+                font-weight: bold;
+                border-radius: 5px;
+                cursor: pointer;
+                user-select: none;
+                transition: background-color 0.3s ease;
+            }
+
+            /* Specific colors for each watercourse button */
+            #btn-bradford {
+                background-color: #1E90FF;  /* Dodger Blue */
+            }
+
+            #btn-clayton {
+                background-color: #00BFFF;  /* Deep Sky Blue */
+            }
+
+            #btn-bowling {
+                background-color: #87CEFA;  /* Light Sky Blue */
+            }
+            
+            #btn-eastbrook {
+                background-color: #5F9EA0;  /* Cadet Blue */
+            }
+
+            #btn-fagley {
+                background-color: #6495ED;  /* Cornflower Blue */
+            }
+
+            #btn-aire {
+                background-color: #4682B4;  /* Steel Blue */
+            }
+
+            #btn-reset-watercourse {
+                background-color: #FFD700;  /* Gold */
+                color: black;
+            }
+        
+
+
+/* Optional: Adjustments for small screens */
+@media (max-width: 600px) {
+    .layer-control-title {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+        /* Styling for filter buttons at the bottom */
+        .filter-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            border-radius: 5px;
+            display: flex;
+            font-size: 12px;
+            justify-content: center;
+        }
+        
+        .button-inactive {
+                 background-color: grey !important;
+                color: white !important;
+            }
+    
+        .filter-button {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Specific colors for each filter button */
+        #btn-woollen {
+            background-color: #FF6347; /* Tomato Red */
+        }
+
+        #btn-dyers {
+            background-color: #4682B4; /* Steel Blue */
+        }
+
+        #btn-other {
+            background-color: #32CD32; /* Lime Green */
+        }
+
+        #btn-all {
+            background-color: #FFD700; /* Gold */
+            color: black;
+        }
+
+        /* Styling for the dropdown filter at the top */
+        .filter-dropdown {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .filter-dropdown select {
+            padding: 5px;
+            font-size: 14px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        /* Fixed Info Box styling */
+        #info-box {
+            position: absolute;
+            top: 50px; /* Fixed position */
+            right: 20px; /* Fixed position */
+            width: 300px;
+            max-height: 80%;
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.95); /* Adjustable opacity */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border-radius: 5px;
+            padding: 15px;
+            z-index: 1001;
+            display: none; /* Hidden by default */
+            transition: opacity 0.3s ease;
+        }
+
+        /* Close button inside the info box */
+        #info-box .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        #info-box .close-btn:hover {
+            color: #000;
+        }
+
+        /* Info Box content styling */
+        #info-box h2 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        #info-box p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        /* Smooth transition for marker style changes */
+        .marker-transition {
+            transition: all 0.3s ease;
+        }
+       
+        
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            #info-box {
+                width: 90%;
+                right: 5%;
+                top: 60px;
+            }
+            .filter-dropdown select {
+                width: 150px;
+                font-size: 12px;
+            }
+            .filter-button {
+                padding: 8px;
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map-container">
+        <!-- Dropdown Filter -->
+        <div class="filter-dropdown">
+            <select id="business-select">
+                <option value="">-- Select a Business --</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+        </div>
+
+        <!-- Map Element -->
+        <div id="map"></div>
+
+        <!-- Category Filter Buttons -->
+        <div class="filter-buttons">
+            <div id="btn-woollen" class="filter-button">Woollen & Worsted Manufacturers</div>
+            <div id="btn-dyers" class="filter-button">Dyers and Sizers</div>
+            <div id="btn-other" class="filter-button">Other</div>
+            <div id="btn-all" class="filter-button">Reset</div>
+        </div>
+        
+      <!-- Watercourse Filter Buttons -->
+        <div class="watercourse-buttons">
+            <div id="btn-bradford" class="watercourse-button">Bradford Beck</div>
+            <div id="btn-clayton" class="watercourse-button">Clayton Beck</div>
+            <div id="btn-bowling" class="watercourse-button">Bowling Beck</div>
+            <div id="btn-fagley" class="watercourse-button">Fagley Beck</div>
+            <div id="btn-aire" class="watercourse-button">River Aire</div>
+            <div id="btn-eastbrook" class="watercourse-button">East Brook</div>
+            <div id="btn-reset-watercourse" class="watercourse-button">Reset</div>
+        </div>
+        
+        
+        <!-- Fixed Info Box -->
+        <div id="info-box">
+            <span class="close-btn">&times;</span>
+            <div id="info-content">
+                <!-- Business details will be populated dynamically -->
+                <h2>Business Details</h2>
+                <p>Select a business to see details here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+  // To store original businesses data
+        // Initialize the map centered on Bradford
+        var map = L.map('map').setView([53.7912497, -1.7442514], 10);
+				
+        var selectedManufacturingCategory = 'All'; // Default to 'All'
+				var selectedWatercourse = 'All';           // Default to 'All'
+        
+        // Arrays of button IDs
+        var manufacturingButtons = ['btn-woollen', 'btn-dyers', 'btn-other'];
+        var manufacturingResetButton = 'btn-all';
+
+        var riverButtons = ['btn-bradford', 'btn-clayton', 'btn-bowling', 'btn-fagley', 'btn-aire', 'btn-eastbrook'];
+        var riverResetButton = 'btn-reset-watercourse';
+        
+        var riversData;       // To store original rivers data
+				var businessesData;   // To store original businesses data
+        
+        // Define the OS 1908 25-inch map tile layer
+        var os1908Layer = L.tileLayer('https://mapseries-tilesets.s3.amazonaws.com/25_inch/yorkshire/{z}/{x}/{y}.png', {
+            attribution: '© National Library of Scotland',
+            maxZoom: 18
+        });
+
+				var os1852Layer = L.tileLayer( 'https://mapseries-tilesets.s3.amazonaws.com/os/six-inch-yorkshire/{z}/{x}/{y}.png', {
+            attribution: '© National Library of Scotland',
+            maxZoom: 18
+        });
+
+        // Define the Modern-day OpenStreetMap tile layer
+        var modernDayLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        });
+
+        // Add the default tile layer to the map
+        os1908Layer.addTo(map);
+
+        // Create a layer control and add it to the map
+        var baseMaps = {
+            "OS 1908 25-inch": os1908Layer,
+            "Modern-day OpenStreet Map": modernDayLayer,
+            "OS 1852 6-inch": os1852Layer
+        };
+        L.control.layers(baseMaps).addTo(map);
+        
+        // Wait for the DOM to fully load
+document.addEventListener('DOMContentLoaded', function() {
+    // Select the layer control container
+    var layerControl = document.querySelector('.leaflet-control-layers');
+
+    if (layerControl) {
+        // Create a new div element for the title
+        var titleDiv = L.DomUtil.create('div', 'layer-control-title', layerControl);
+        titleDiv.innerHTML = '<strong>Choose a map layer</strong>';
+
+        // Optional: Prevent interactions with the title div
+        L.DomEvent.disableClickPropagation(titleDiv);
+        L.DomEvent.disableScrollPropagation(titleDiv);
+    }
+});
+        
+        // URL to the rivers GeoJSON file
+        var riversGeojsonUrl = 'https://raw.githubusercontent.com/maaxlong/pollution_map/refs/heads/main/data/1852_becks_30_sept_v2.geojson';
+        
+        // Variable to store the rivers layer for later filtering
+        var riversLayer;
+        
+        // Fetch and add the rivers GeoJSON
+        fetch(riversGeojsonUrl)
+            .then(response => response.json())
+            .then(data => {
+            		riversData = data; 
+                // Create a new GeoJSON layer for rivers
+                riversLayer = L.geoJson(data, {
+                    style: function (feature) {
+                        return {
+                            color: "#00BFFF",  // Initial line color for rivers
+                            weight: 3,         // Line thickness
+                            opacity: 0.7       // Line opacity
+                        };
+                    },
+                    onEachFeature: function (feature, layer) {
+                        // Extract the river name from the feature properties
+                        var riverName = feature.properties.Name || 'Unnamed River';
+
+                        // Add a tooltip that follows the mouse cursor on hover
+                        layer.bindTooltip(riverName, {
+                            permanent: false,      // Show only on hover
+                            direction: "auto",     // Automatically adjust the tooltip direction
+                            sticky: true,          // Tooltip follows the mouse cursor
+                            className: "river-label"
+                        });
+
+                        // Event listeners for highlighting
+                        layer.on('mouseover', function () {
+                            layer.setStyle({
+                                color: "darkblue",  // Change to dark blue on hover
+                                weight: 8,          // Thicker line on hover
+                                opacity: 1
+                            });
+                        });
+
+                        // Reset style on mouseout
+                        layer.on('mouseout', function () {
+                            riversLayer.resetStyle(layer);  // Reset to default style
+                        });
+                    }
+                }).addTo(map);
+
+                // Fit the map bounds to show all rivers initially
+                map.fitBounds(riversLayer.getBounds());
+            })
+            .catch(err => console.error('Error loading rivers GeoJSON: ', err));
+
+        // URL to the GeoJSON file hosted on GitHub
+        var geojsonUrl = 'https://raw.githubusercontent.com/maaxlong/pollution_map/refs/heads/main/data/sept_30_v1.geojson';
+
+        var geojsonLayer;      // To store the loaded GeoJSON layer
+        var allGeoData = null; // To store all GeoJSON data globally
+        var allFeatures = [];  // To store currently displayed features for dropdown
+
+        // Function to get marker color based on business category
+        function getMarkerColor(businessCategory) {
+            switch (businessCategory) {
+                case 'Woollen & Worsted Manufacturers':
+                    return '#FF6347';  // Tomato Red
+                case 'Dyers and Sizers':
+                    return '#4682B4';  // Steel Blue
+                default:
+                    return '#32CD32';  // Lime Green for 'Other'
+            }
+        }
+
+        // Variable to keep track of the currently selected marker
+        var selectedLayer = null;
+
+        // Reusable function to handle feature interactions with highlighting and hover effects
+        function onEachFeature(feature, layer) {
+            // Add a CSS class for smooth transitions
+            layer.options.className = 'marker-transition';
+
+            // Click event to highlight marker and display info box
+            layer.on('click', function () {
+                // If another marker is selected, reset its style
+                if (selectedLayer && selectedLayer !== layer) {
+                    selectedLayer.setStyle({
+                        radius: 6,
+                        fillColor: getMarkerColor(selectedLayer.feature.properties.business_category || 'Other'),
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    });
+                }
+
+                // Reset styles for all markers except the selected one
+                geojsonLayer.eachLayer(function(l) {
+                    if (l !== layer) {
+                        l.setStyle({ 
+                            radius: 6,
+                            fillColor: getMarkerColor(l.feature.properties.business_category || 'Other'),
+                            color: "#000",
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
+                    }
+                });
+
+                // Highlight the selected marker in yellow
+                layer.setStyle({
+                    radius: 8, // Increased size for highlight
+                    fillColor: '#FFFF00', // Yellow color for highlight
+                    color: "#000",
+                    weight: 2, // Thicker border
+                    opacity: 1,
+                    fillOpacity: 1
+                });
+
+                // Update the selectedLayer reference
+                selectedLayer = layer;
+
+                // Display the info box with business details
+                displayInfoBox(feature, layer);
+
+                // Zoom to the selected feature
+                zoomToFeature(layer);
+            });
+
+            // Mouseover event to grey out the marker if it's not selected
+            layer.on('mouseover', function () {
+                // Check if the marker is not currently highlighted (fillColor is not yellow)
+                if (layer !== selectedLayer) {
+                    layer.setStyle({
+                        fillColor: '#808080', // Grey color
+                        fillOpacity: 0.5
+                    });
+                }
+            });
+
+            // Mouseout event to reset the marker style if it's not selected
+            layer.on('mouseout', function () {
+                // If the marker is highlighted, keep its yellow color
+                if (layer === selectedLayer) {
+                    layer.setStyle({
+                        fillColor: '#FFFF00',
+                        fillOpacity: 1
+                    });
+                } else {
+                    // Reset to original style based on business category
+                    layer.setStyle({
+                        fillColor: getMarkerColor(feature.properties.business_category || 'Other'),
+                        fillOpacity: 0.8
+                    });
+                }
+            });
+        }
+
+        // Function to display the fixed info box with business details
+        function displayInfoBox(feature, layer) {
+            var infoBox = document.getElementById('info-box');
+            var infoContent = document.getElementById('info-content');
+
+            // Extract properties with fallbacks
+            var name = feature.properties.name || 'N/A';
+            var address = feature.properties.address || 'N/A';
+            var businessType = feature.properties.business_type || 'N/A';
+            var businessCategory = feature.properties.business_category || 'Other';
+            var nominalHorsePower = feature.properties.nominal_horse_power || 'N/A';
+            var usesDyes = feature.properties.uses_dyes !== undefined ? (feature.properties.uses_dyes ? 'Yes' : 'No') : 'N/A';
+            var usesBleaching = feature.properties.uses_bleaching_materials !== undefined ? (feature.properties.uses_bleaching_materials ? 'Yes' : 'No') : 'N/A';
+            var affectedByFloods = feature.properties.affected_by_floods !== undefined ? (feature.properties.affected_by_floods ? 'Yes' : 'No') : 'N/A';
+            var situatedOnWatercourse = feature.properties.beck || 'N/A';
+
+            // Status of river comments
+            var statusOfRiverComments = feature.properties.status_of_river_comments || 'No comments';
+
+            // Soapsuds: Check if the soapsuds property exists and is valid
+            var soapsuds = feature.properties.soapsuds && typeof feature.properties.soapsuds === 'object' ? feature.properties.soapsuds : null;
+            var treatedForGrease = soapsuds && soapsuds.treated_for_recovery_of_grease !== undefined ? (soapsuds.treated_for_recovery_of_grease ? 'Yes' : 'No') : 'N/A';
+
+            // Oils: Check if oils is an array and valid
+            var oils = Array.isArray(feature.properties.oils) && feature.properties.oils.length > 0 ? feature.properties.oils : null;
+            var oilInfo = 'No oils used';
+            if (oils) {
+                oilInfo = oils.map(oil => {
+                    var oilType = oil.oil_type || 'Unknown oil';
+                    var quantity = oil.quantity || 'N/A';
+                    var unit = oil.quantity_measured_in || '';
+                    return `${oilType}, ${quantity} ${unit}`;
+                }).join('<br>');
+            }
+
+            // Water supplies: Check if water_supplies is an object or an array
+            var waterSupplies = feature.properties.water_supplies;
+            var waterSources = 'No water sources';
+
+            if (waterSupplies) {
+                if (Array.isArray(waterSupplies)) {
+                    // If water_supplies is an array
+                    waterSources = waterSupplies.map(function(supply) {
+                        return supply.source_of_water || 'Unknown source';
+                    }).join(', ');
+                } else if (typeof waterSupplies === 'object') {
+                    // If water_supplies is a single object
+                    waterSources = waterSupplies.source_of_water || 'Unknown source';
+                }
+            }
+
+            // Construct the info box content
+            var content = `
+                <h2>${name}</h2>
+                <p><strong>Address:</strong> ${address}</p>
+                <p><strong>Business Type:</strong> ${businessType}</p>
+                <p><strong>Business Category:</strong> ${businessCategory}</p>
+                <p><strong>Horse Power:</strong> ${nominalHorsePower}</p>
+                <p><strong>Uses Dyes:</strong> ${usesDyes}</p>
+                <p><strong>Uses Bleaching Materials:</strong> ${usesBleaching}</p>
+                <p><strong>Affected by Floods:</strong> ${affectedByFloods}</p>
+                <p><strong>Watercourse:</strong> ${situatedOnWatercourse}</p>
+                <p><strong>Status of River:</strong> ${statusOfRiverComments}</p>
+                <p><strong>Treated for Grease (soapsuds):</strong> ${treatedForGrease}</p>
+                <p><strong>Oils:</strong><br>${oilInfo}</p>
+                <p><strong>Water Sources:</strong> ${waterSources}</p>
+            `;
+
+            infoContent.innerHTML = content;
+            infoBox.style.display = 'block';
+            infoBox.style.opacity = '1';
+        }
+
+        // Function to close the info box
+        function closeInfoBox() {
+            var infoBox = document.getElementById('info-box');
+            infoBox.style.display = 'none';
+            infoBox.style.opacity = '0';
+            // Reset the selectedLayer reference
+            if (selectedLayer) {
+                selectedLayer.setStyle({
+                    radius: 6,
+                    fillColor: getMarkerColor(selectedLayer.feature.properties.business_category || 'Other'),
+                    color: "#000",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                });
+                selectedLayer = null;
+            }
+        }
+
+        // Function to zoom to the feature
+        function zoomToFeature(layer) {
+            map.setView(layer.getLatLng(), 16); // Adjust the zoom level as needed
+        }
+
+        // Function to populate the dropdown with business names
+        function populateDropdown(features) {
+            var businessSelect = document.getElementById('business-select');
+
+            // Clear existing options except the first
+            businessSelect.innerHTML = '<option value="">-- Select a Business --</option>';
+
+            features.forEach(function(feature, index) {
+                var name = feature.properties.name || 'Unnamed Business';
+                var option = document.createElement('option');
+                option.value = index;  // Use the index as a unique identifier
+                option.text = name;
+                businessSelect.appendChild(option);
+            });
+
+            // Add event listener for selection
+            businessSelect.addEventListener('change', function(e) {
+                var selectedIndex = e.target.value;
+                if (selectedIndex === "") {
+                    // Close the info box and reset all markers if no selection
+                    closeInfoBox(); 
+                    geojsonLayer.eachLayer(function(l) {
+                        l.setStyle({ 
+                            radius: 6,
+                            fillColor: getMarkerColor(l.feature.properties.business_category || 'Other'),
+                            color: "#000",
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
+                    });
+                    return;
+                }
+                var selectedFeature = allFeatures[selectedIndex];
+                if (selectedFeature) {
+                    var coords = selectedFeature.geometry.coordinates;
+                    var latlng;
+                    if (selectedFeature.geometry.type === "Point") {
+                        latlng = [coords[1], coords[0]];
+                    } else {
+                        // Handle other geometry types if necessary
+                        alert('Selected feature is not a point.');
+                        return;
+                    }
+
+                    // Zoom to the selected business
+                    map.setView(latlng, 16);  // Adjust the zoom level as needed
+
+                    // Find the corresponding layer and highlight it
+                    geojsonLayer.eachLayer(function(layer) {
+                        if (layer.feature === selectedFeature) {
+                            // If another marker is selected, reset its style
+                            if (selectedLayer && selectedLayer !== layer) {
+                                selectedLayer.setStyle({
+                                    radius: 6,
+                                    fillColor: getMarkerColor(selectedLayer.feature.properties.business_category || 'Other'),
+                                    color: "#000",
+                                    weight: 1,
+                                    opacity: 1,
+                                    fillOpacity: 0.8
+                                });
+                            }
+
+                            // Reset styles for all markers except the selected one
+                            geojsonLayer.eachLayer(function(l) {
+                                if (l !== layer) {
+                                    l.setStyle({ 
+                                        radius: 6,
+                                        fillColor: getMarkerColor(l.feature.properties.business_category || 'Other'),
+                                        color: "#000",
+                                        weight: 1,
+                                        opacity: 1,
+                                        fillOpacity: 0.8
+                                    });
+                                }
+                            });
+
+                            // Highlight the selected marker in yellow
+                            layer.setStyle({
+                                radius: 8,
+                                fillColor: '#FFFF00', // Yellow color for highlight
+                                color: "#000",
+                                weight: 2,
+                                opacity: 1,
+                                fillOpacity: 1
+                            });
+
+                            // Update the selectedLayer reference
+                            selectedLayer = layer;
+
+                            // Display the info box
+                            displayInfoBox(selectedFeature, layer);
+                        }
+                    });
+                }
+            });
+        }
+
+        // Fetch the GeoJSON data once and store it globally
+        fetch(geojsonUrl)
+            .then(response => response.json())
+            .then(data => {
+            		businessesData = data; 
+                allGeoData = data; // Store the data globally
+                allFeatures = data.features; // Store all features for dropdown
+
+                // Initialize the main GeoJSON layer
+                geojsonLayer = L.geoJson(data, {
+                    pointToLayer: function(feature, latlng) {
+                        var businessCategory = feature.properties.business_category || 'Other';
+                        var markerColor = getMarkerColor(businessCategory);
+
+                        return L.circleMarker(latlng, {
+                            radius: 6,
+                            fillColor: markerColor,
+                            color: "#000",  // Border color
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8,
+                            className: 'marker-transition' // Add the transition class
+                        });
+                    },
+                    onEachFeature: onEachFeature  // Use the reusable function
+                }).addTo(map);
+
+                // Fit the map bounds to show all features initially
+                map.fitBounds(geojsonLayer.getBounds());
+
+                // Populate the dropdown with all features
+                populateDropdown(allFeatures);
+            })
+            .catch(err => console.error('Error loading GeoJSON: ', err));
+
+        // Function to filter data based on category
+        function filterByCategory(category) {
+            if (!allGeoData) {
+                console.error('GeoJSON data not loaded yet.');
+                return;
+            }
+
+            // Remove existing GeoJSON layer if present
+            if (geojsonLayer) {
+                map.removeLayer(geojsonLayer);
+            }
+
+            // Filter features based on the selected category
+            var filteredFeatures = category === 'All' 
+                ? allGeoData.features 
+                : allGeoData.features.filter(function (feature) {
+                    return feature.properties.business_category === category;
+                });
+
+            // Update the global allFeatures array to the filtered features
+            allFeatures = filteredFeatures;
+
+            // Create a new GeoJSON layer with the filtered features
+            geojsonLayer = L.geoJson({
+                "type": "FeatureCollection",
+                "features": filteredFeatures
+            }, {
+                pointToLayer: function(feature, latlng) {
+                    var businessCategory = feature.properties.business_category || 'Other';
+                    var markerColor = getMarkerColor(businessCategory);
+
+                    return L.circleMarker(latlng, {
+                        radius: 6,  // Consistent radius for visibility
+                        fillColor: markerColor,
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8,
+                        className: 'marker-transition' // Add the transition class
+                    });
+                },
+                onEachFeature: onEachFeature  // Use the reusable function
+            }).addTo(map);
+
+            // Fit the map bounds to the new filtered layer
+            if (filteredFeatures.length > 0) {
+                map.fitBounds(geojsonLayer.getBounds());
+            }
+
+            // Update the dropdown to reflect the filtered data
+            populateDropdown(allFeatures);
+            closeInfoBox(); // Close info box when filter changes
+
+            // Reset selectedLayer reference
+            selectedLayer = null;
+        }
+
+              function filterByWatercourse(beckName) {
+          if (!riversData || !businessesData) {
+              console.error('Data not loaded yet.');
+              return;
+          }
+
+          // Remove existing layers if present
+          if (riversLayer) {
+              map.removeLayer(riversLayer);
+          }
+          if (geojsonLayer) {
+              map.removeLayer(geojsonLayer);
+          }
+
+          if (beckName === 'Reset') {
+              // Add back all rivers
+              riversLayer = L.geoJson(riversData, {
+                  style: function (feature) {
+                      return {
+                          color: "#00BFFF",  // Initial line color for rivers
+                          weight: 3,         // Line thickness
+                          opacity: 0.7       // Line opacity
+                      };
+                  },
+                  onEachFeature: function (feature, layer) {
+                      // Existing code for rivers
+                      // ... (reuse your existing onEachFeature function)
+                  }
+              }).addTo(map);
+
+              // Add back all businesses
+              geojsonLayer = L.geoJson(businessesData, {
+                  pointToLayer: function(feature, latlng) {
+                      var businessCategory = feature.properties.business_category || 'Other';
+                      var markerColor = getMarkerColor(businessCategory);
+
+                      return L.circleMarker(latlng, {
+                          radius: 6,  // Consistent radius for visibility
+                          fillColor: markerColor,
+                          color: "#000",
+                          weight: 1,
+                          opacity: 1,
+                          fillOpacity: 0.8,
+                          className: 'marker-transition' // Add the transition class
+                      });
+                  },
+                  onEachFeature: onEachFeature  // Use your reusable function
+              }).addTo(map);
+
+              // Fit the map bounds to show all features
+              var group = L.featureGroup([riversLayer, geojsonLayer]);
+              map.fitBounds(group.getBounds());
+
+              // Update the dropdown to reflect all data
+              allFeatures = businessesData.features;
+              populateDropdown(allFeatures);
+          } else {
+              // Filter rivers
+              var filteredRivers = riversData.features.filter(function(feature) {
+                  return feature.properties.show_beck === beckName;
+              });
+
+              riversLayer = L.geoJson({
+                  "type": "FeatureCollection",
+                  "features": filteredRivers
+              }, {
+                  style: function (feature) {
+                      return {
+                          color: "#00BFFF",
+                          weight: 3,
+                          opacity: 0.7
+                      };
+                  },
+                  onEachFeature: function (feature, layer) {
+                      // Existing code for rivers
+                      // ... (reuse your existing onEachFeature function)
+                  }
+              }).addTo(map);
+
+              // Filter businesses
+              var filteredBusinesses = businessesData.features.filter(function(feature) {
+                  return feature.properties.show_beck === beckName;
+              });
+
+              geojsonLayer = L.geoJson({
+                  "type": "FeatureCollection",
+                  "features": filteredBusinesses
+              }, {
+                  pointToLayer: function(feature, latlng) {
+                      var businessCategory = feature.properties.business_category || 'Other';
+                      var markerColor = getMarkerColor(businessCategory);
+
+                      return L.circleMarker(latlng, {
+                          radius: 6,
+                          fillColor: markerColor,
+                          color: "#000",
+                          weight: 1,
+                          opacity: 1,
+                          fillOpacity: 0.8,
+                          className: 'marker-transition'
+                      });
+                  },
+                  onEachFeature: onEachFeature  // Use your reusable function
+              }).addTo(map);
+
+              // Fit the map bounds to show filtered features
+              var group = L.featureGroup([riversLayer, geojsonLayer]);
+              map.fitBounds(group.getBounds());
+
+              // Update the dropdown to reflect the filtered data
+              allFeatures = filteredBusinesses;
+              populateDropdown(allFeatures);
+          }
+
+          // Close info box when filter changes
+          closeInfoBox();
+
+          // Reset selectedLayer reference
+          selectedLayer = null;
+      }
+
+          function handleManufacturingButtonClick(selectedButtonId) {
+          // Add 'button-inactive' class to all manufacturing buttons except the selected one
+          manufacturingButtons.forEach(function(buttonId) {
+              var button = document.getElementById(buttonId);
+              if (buttonId !== selectedButtonId) {
+                  button.classList.add('button-inactive');
+              } else {
+                  button.classList.remove('button-inactive');
+              }
+          });
+          // Ensure 'Reset' button remains in its original style
+          document.getElementById(manufacturingResetButton).classList.remove('button-inactive');
+      }
+
+      function resetManufacturingButtons() {
+          // Remove 'button-inactive' class from all manufacturing buttons
+          manufacturingButtons.forEach(function(buttonId) {
+              var button = document.getElementById(buttonId);
+              button.classList.remove('button-inactive');
+          });
+          // Ensure 'Reset' button remains in its original style
+          document.getElementById(manufacturingResetButton).classList.remove('button-inactive');
+      }
+      
+      function handleRiverButtonClick(selectedButtonId) {
+        // Add 'button-inactive' class to all river buttons except the selected one
+        riverButtons.forEach(function(buttonId) {
+            var button = document.getElementById(buttonId);
+            if (buttonId !== selectedButtonId) {
+                button.classList.add('button-inactive');
+            } else {
+                button.classList.remove('button-inactive');
+            }
+        });
+        // Ensure 'Reset' button remains in its original style
+        document.getElementById(riverResetButton).classList.remove('button-inactive');
+    }
+
+    function resetRiverButtons() {
+        // Remove 'button-inactive' class from all river buttons
+        riverButtons.forEach(function(buttonId) {
+            var button = document.getElementById(buttonId);
+            button.classList.remove('button-inactive');
+        });
+        // Ensure 'Reset' button remains in its original style
+        document.getElementById(riverResetButton).classList.remove('button-inactive');
+    }
+    
+    function applyFilters() {
+    if (!businessesData || !riversData) {
+        console.error('Data not loaded yet.');
+        return;
+    }
+
+    // Remove existing layers if present
+    if (geojsonLayer) {
+        map.removeLayer(geojsonLayer);
+    }
+    if (riversLayer) {
+        map.removeLayer(riversLayer);
+    }
+
+    // Filter businesses based on selected manufacturing category and watercourse
+    var filteredBusinesses = businessesData.features.filter(function(feature) {
+        var matchesCategory = selectedManufacturingCategory === 'All' || 
+                              feature.properties.business_category === selectedManufacturingCategory;
+
+        var matchesWatercourse = selectedWatercourse === 'All' || 
+                                 feature.properties.show_beck === selectedWatercourse;
+
+        return matchesCategory && matchesWatercourse;
+    });
+
+    // Create a new GeoJSON layer with the filtered businesses
+    geojsonLayer = L.geoJson({
+        "type": "FeatureCollection",
+        "features": filteredBusinesses
+    }, {
+        pointToLayer: function(feature, latlng) {
+            var businessCategory = feature.properties.business_category || 'Other';
+            var markerColor = getMarkerColor(businessCategory);
+
+            return L.circleMarker(latlng, {
+                radius: 6,  // Consistent radius for visibility
+                fillColor: markerColor,
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8,
+                className: 'marker-transition'
+            });
+        },
+        onEachFeature: onEachFeature
+    }).addTo(map);
+
+    // Filter rivers based on selected watercourse
+    var filteredRivers = riversData.features.filter(function(feature) {
+        return selectedWatercourse === 'All' || feature.properties.show_beck === selectedWatercourse;
+    });
+
+    // Create a new GeoJSON layer with the filtered rivers
+    riversLayer = L.geoJson({
+        "type": "FeatureCollection",
+        "features": filteredRivers
+    }, {
+        style: function (feature) {
+            return {
+                color: "#00BFFF",
+                weight: 3,
+                opacity: 0.7
+            };
+        },
+        onEachFeature: function (feature, layer) {
+            var riverName = feature.properties.Name || 'Unnamed River';
+
+            // Add a tooltip that follows the mouse cursor on hover
+            layer.bindTooltip(riverName, {
+                permanent: false,
+                direction: "auto",
+                sticky: true,
+                className: "river-label"
+            });
+
+            // Event listeners for highlighting
+            layer.on('mouseover', function () {
+                layer.setStyle({
+                    color: "darkblue",
+                    weight: 8,
+                    opacity: 1
+                });
+            });
+
+            // Reset style on mouseout
+            layer.on('mouseout', function () {
+                riversLayer.resetStyle(layer);
+            });
+        }
+    }).addTo(map);
+
+    // Fit the map bounds to show filtered features
+    var group = L.featureGroup([geojsonLayer, riversLayer]);
+    map.fitBounds(group.getBounds());
+
+    // Update the dropdown to reflect the filtered data
+    allFeatures = filteredBusinesses;
+    populateDropdown(allFeatures);
+
+    // Close info box when filter changes
+    closeInfoBox();
+
+    // Reset selectedLayer reference
+    selectedLayer = null;
+}
+
+document.getElementById('btn-bradford').addEventListener('click', function() {
+    handleRiverButtonClick('btn-bradford');
+    selectedWatercourse = 'Bradford Beck';
+    applyFilters();
+});
+
+document.getElementById('btn-clayton').addEventListener('click', function() {
+    handleRiverButtonClick('btn-clayton');
+    selectedWatercourse = 'Clayton Beck';
+    applyFilters();
+});
+
+document.getElementById('btn-bowling').addEventListener('click', function() {
+    handleRiverButtonClick('btn-bowling');
+    selectedWatercourse = 'Bowling Beck';
+    applyFilters();
+});
+
+document.getElementById('btn-fagley').addEventListener('click', function() {
+    handleRiverButtonClick('btn-fagley');
+    selectedWatercourse = 'Fagley Beck';
+    applyFilters();
+});
+
+document.getElementById('btn-aire').addEventListener('click', function() {
+    handleRiverButtonClick('btn-aire');
+    selectedWatercourse = 'River Aire';
+    applyFilters();
+});
+
+document.getElementById('btn-eastbrook').addEventListener('click', function() {
+    handleRiverButtonClick('btn-eastbrook');
+    selectedWatercourse = 'East Brook';
+    applyFilters();
+});
+
+document.getElementById('btn-reset-watercourse').addEventListener('click', function() {
+    resetRiverButtons();
+    selectedWatercourse = 'All';
+    applyFilters();
+});
+
+        // Attach event listeners to the category filter buttons
+       document.getElementById('btn-woollen').addEventListener('click', function() {
+    handleManufacturingButtonClick('btn-woollen');
+    selectedManufacturingCategory = 'Woollen & Worsted Manufacturers';
+    applyFilters();
+});
+
+document.getElementById('btn-dyers').addEventListener('click', function() {
+    handleManufacturingButtonClick('btn-dyers');
+    selectedManufacturingCategory = 'Dyers and Sizers';
+    applyFilters();
+});
+
+document.getElementById('btn-other').addEventListener('click', function() {
+    handleManufacturingButtonClick('btn-other');
+    selectedManufacturingCategory = 'Other';
+    applyFilters();
+});
+
+document.getElementById('btn-all').addEventListener('click', function() {
+    resetManufacturingButtons();
+    selectedManufacturingCategory = 'All';
+    applyFilters();
+});
+    </script>
+</body>
+</html>
