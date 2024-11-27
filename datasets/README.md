@@ -32,15 +32,15 @@ Each folder refers to an individual collection of georeferenced map tiles from t
 Each folder contains three GeoJSON files:
 
 
-*   **Watercourses**: This file contains vector line features for watercourses identified on the relevant basemap. These include rivers, becks, drains, canals and other watercourses. Each line has the following attributes:
+*   **year_watercourses.geojson**: This file contains vector line features for watercourses identified on the relevant basemap. These include rivers, becks, drains, canals and other watercourses. Each line has the following attributes:
       1.   ***fid***: identifier. 
       2.   ***name***: the name of the watercourse as identified on the map. Where no name if visible, we have used 'Other'. 
       3. ***length***: the length of the vector line, in metres. 
       4. ***tributary_of_***: where one river or beck is a tributary of another, the latter's name. For mill streams, we have chosen the most likely downstream watercourse. For canals, drains, and ambiguous cases, we have used 'NULL'. 
 
-*   **Watercourses_no_canals**: Identical to the watercourses file, but excluding both the Bradford Canal and the Leeds and Liverpool Canal, where they appear on the map. 
+*   **year_watercourses_no_canals.geojson**: Identical to the watercourses file, but excluding both the Bradford Canal and the Leeds and Liverpool Canal, where they appear on the map. 
 
-*   **Millponds**: This file contains polygon features for millponds, reservoirs, ponds, and other bodies of water identified on the relevant basemap. Each polygon has the following attributes: 
+*   **year_millponds.geojson**: This file contains polygon features for millponds, reservoirs, ponds, and other bodies of water identified on the relevant basemap. Each polygon has the following attributes: 
 
     1.   ***id***: identifier. 
     2.   ***map-label***: label assigned to the body of water in the original map, where present. Otherwise NULL. 
