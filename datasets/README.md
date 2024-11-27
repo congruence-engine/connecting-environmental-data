@@ -29,7 +29,7 @@ Each folder refers to an individual collection of georeferenced map tiles from t
 *   **1908**: [Ordnance Survey Maps - 25 inch England and Wales, 1841-1952, Revised: 1905-6, Published: 1908](https://maps.nls.uk/os/25inch-england-and-wales/)
 *   **1909**: [Ordnance Survey Maps - Six-inch England and Wales, Second Edition, Revised: 1905-6, Published: 1909](https://maps.nls.uk/os/6inch-england-and-wales/)
 
-Each folder contains two GeoJSON files:
+Each folder contains three GeoJSON files:
 
 
 *   **Watercourses**: This file contains vector line features for watercourses identified on the relevant basemap. These include rivers, becks, drains, canals and other watercourses. Each line has the following attributes:
@@ -38,6 +38,7 @@ Each folder contains two GeoJSON files:
       3. ***length***: the length of the vector line, in metres. 
       4. ***tributary_of_***: where one river or beck is a tributary of another, the latter's name. For mill streams, we have chosen the most likely downstream watercourse. For canals, drains, and ambiguous cases, we have used 'NULL'. 
 
+*   **Watercourses_no_canals**: Identical to the watercourses file, but excluding both the Bradford Canal and the Leeds and Liverpool Canal, where they appear on the map. 
 
 *   **Millponds**: This file contains polygon features for millponds, reservoirs, ponds, and other bodies of water identified on the relevant basemap. Each polygon has the following attributes: 
 
