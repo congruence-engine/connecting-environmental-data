@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
         
         // URL to the rivers GeoJSON file
-        var riversGeojsonUrl = 'https://raw.githubusercontent.com/maaxlong/pollution_map/refs/heads/main/data/1852_becks_30_sept_v2.geojson';
+        var riversGeojsonUrl = 'https://raw.githubusercontent.com/maaxlong/pollution_map/refs/heads/main/data/1852_6_inch_waterways_no_canals.geojson';
         
         // Variable to store the rivers layer for later filtering
         var riversLayer;
@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     onEachFeature: function (feature, layer) {
                         // Extract the river name from the feature properties
-                        var riverName = feature.properties.Name || 'Unnamed River';
+                        var riverName = feature.properties.name || 'Unnamed River';
 
                         // Add a tooltip that follows the mouse cursor on hover
                         layer.bindTooltip(riverName, {
