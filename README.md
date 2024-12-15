@@ -49,7 +49,7 @@ Software
 - Historic Environment Records datasets of mills in West Yorkshire
 - Vector lines of watercourses in Bradford and West Yorkshire
 
-## Investigation methods/ tools/ code/ software :
+## Investigation methods/ tools/ code/ software 
 
 - OCR: ABBYY Finereader
 - ChatGPT
