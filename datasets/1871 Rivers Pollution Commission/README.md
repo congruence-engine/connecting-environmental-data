@@ -4,6 +4,13 @@ The files in this folder contain datasets based on the third report of the 1868 
 
 ## Context
 
+## File overview:
+The folder contains the following files:
+* 1871_all_companies_input.csv - a csv file with the full dataset extracted from the report, with column headers for 'firm_name', 'business_type', 'address', and 'reply'.
+* 1871_all_companies.json - the processed dataset, with detailed values extracted from the 'reply' column in 1871_all_companies_input.csv.
+* bradford_mills_1871.csv - a subset of the report, focussed specifically on textile mills in the Bradford area.
+* bradford_mills_1871_extracted.json - the processed dataset for the Bradford subset. 
+
 ## Data preparation
 
 ### Pipeline
