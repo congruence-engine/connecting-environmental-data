@@ -8,6 +8,6 @@ The files in this folder contain datasets based on the third report of the 1868 
 
 ### Pipeline
 1. Image aquisition: the images of the report were acquired via ProQuest's UK Parliamentary Papers database. Because of licensing restrictions, we are unable to share the original images here.
-2. OCR - Optical Character Recognition of the images was peformed using the Surya['https://github.com/VikParuchuri/surya'] OCR engine. 
+2. OCR - Optical Character Recognition of the images was peformed using the [Surya]('https://github.com/VikParuchuri/surya') OCR engine. 
 
 ## License
