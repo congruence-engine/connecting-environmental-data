@@ -16,7 +16,7 @@ The folder contains the following files:
 ### Pipeline
 1. Image aquisition: the images of the report were acquired via ProQuest's UK Parliamentary Papers database. Because of licensing restrictions, we are unable to share the original images here.
 2. OCR - Optical Character Recognition of the images was peformed using the [Surya](https://github.com/VikParuchuri/surya) OCR engine.
-3. Conversion to CSV - The OCR results were then fed to the OpenAI API for conversion into a CSV file with the following column headers: 'firm_name', 'business_type', 'address', 'reply'. This ensured that the data accurately matched the original table layout of the report. 
+3. Conversion to CSV - The OCR results were then fed to the OpenAI API for conversion, first into a markdown file, and then into a CSV file with the following column headers: 'firm_name', 'business_type', 'address', 'reply'. This ensured that the data accurately matched the original table layout of the report. 
 4. Manual cleaning - At this stage, the dataset was cleaned manually, with a view to fixing common OCR errors present in the dataset.
 5. JSON file creation - Finally, the cleaned dataset was transformed into a structured JSON file, using the OpenAI API's 'Structured Outputs' option. This followed a pre-established schema that was included with the prompt. This enabled the 'reply' section to be transformed row by row in the input CSV.
 
