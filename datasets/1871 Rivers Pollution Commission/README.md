@@ -20,4 +20,9 @@ The folder contains the following files:
 4. Manual cleaning - At this stage, the dataset was cleaned manually, with a view to fixing common OCR errors present in the dataset.
 5. JSON file creation - Finally, the cleaned dataset was transformed into a structured JSON file, using the OpenAI API's 'Structured Outputs' option. This followed a pre-established schema that was included with the prompt. This enabled the 'reply' section to be transformed row by row in the input CSV.
 
+## Code
+You can find the relevant code files for each step of this process in the main '[code](https://github.com/congruence-engine/connecting-environmental-data/tree/main/code)' file of this repo. 
+* [GPT splitting](https://github.com/congruence-engine/connecting-environmental-data/blob/main/code/GPT_split_1871_report.ipynb)
+* 
+
 ## License
