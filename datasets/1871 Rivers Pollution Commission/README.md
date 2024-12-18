@@ -23,6 +23,8 @@ The folder contains the following files:
 ## Code
 You can find the relevant code files for each step of this process in the main '[code](https://github.com/congruence-engine/connecting-environmental-data/tree/main/code)' file of this repo. 
 * [GPT splitting](https://github.com/congruence-engine/connecting-environmental-data/blob/main/code/GPT_split_1871_report.ipynb)
+* [OpenAI PDF to Markdown](https://github.com/congruence-engine/connecting-environmental-data/blob/main/code/GPT_API_PDF_to_Markdown.ipynb)
+* [OpenAI data processing](https://github.com/congruence-engine/connecting-environmental-data/blob/main/code/OpenAI_API_data_processing.ipynb)
 * 
 
 ## License
