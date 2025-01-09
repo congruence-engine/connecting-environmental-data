@@ -2,8 +2,6 @@
 
 The files in this folder contain datasets based on the third report of the 1868 Rivers Pollution Commission, *Pollution Arising from the Woollen Manufacture, and Processes Connected Therewith* (1871). They were created as part of the 'Connecting Environmental Data' investigation by the *Congruence Engine* project. 
 
-## Context
-
 ## File overview:
 The folder contains the following files:
 * 1871_all_companies_input.csv - a csv file with the full dataset extracted from the report, with column headers for 'firm_name', 'business_type', 'address', and 'reply'.
@@ -21,7 +19,7 @@ The folder contains the following files:
 5. JSON file creation - Finally, the cleaned dataset was transformed into a structured JSON file, using the OpenAI API's 'Structured Outputs' option. This followed a pre-established schema that was included with the prompt. This enabled the 'reply' section to be transformed row by row in the input CSV.
 
 ## Code
-You can find the relevant code files for each step of this process in the main '[code](https://github.com/congruence-engine/connecting-environmental-data/tree/main/code)' file of this repo. 
+You can find the relevant code files for each step of this process in the main '[code](https://github.com/congruence-engine/connecting-environmental-data/tree/main/code)' file of this repo:
 * [GPT splitting](https://github.com/congruence-engine/connecting-environmental-data/blob/main/code/GPT_split_1871_report.ipynb)
 * [OpenAI PDF to Markdown](https://github.com/congruence-engine/connecting-environmental-data/blob/main/code/GPT_API_PDF_to_Markdown.ipynb)
 * [OpenAI data processing](https://github.com/congruence-engine/connecting-environmental-data/blob/main/code/OpenAI_API_data_processing.ipynb)
