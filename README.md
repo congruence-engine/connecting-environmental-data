@@ -60,13 +60,12 @@ Software
 
 ## Outputs  
 
-- Line vectors for historic watercourses in Bradford and surrounding area
-- Felt maps containing watercourses (and some millponds)
+- [Vector line datasets for historic watercourses in Bradford and surrounding area](https://github.com/congruence-engine/connecting-environmental-data/tree/main/datasets/Watercourses%20and%20Millponds)
+- [Felt maps displaying watercourses and millponds](https://felt.com/map/Bradford-Becks-1848-1909-RfbqXAYYSRicW8wMDe6EWA?loc=53.79572,-1.74846,13.68z)
 - Geolocated tithe maps for Bradford and surrounding area
-- Database of mills and their responses to 1871 River Pollution Report (Excel spreadsheet)
+- [Database of mills and their responses to 1871 River Pollution Report](https://github.com/congruence-engine/connecting-environmental-data/tree/main/datasets/1871%20Rivers%20Pollution%20Commission)
 - Neo4j database
 - Book chapter: ‘Towards a natural collection: digital and community histories of river pollution in Bradford’
-
 
 
 ## Licence 
