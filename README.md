@@ -44,10 +44,10 @@ Software
 
 ## Data sources 
 
-- Ordnance Survey Maps from the National Library of Scotland
-- Scans of 19th-century river pollution reports from Parliamentary Papers Online
+- Ordnance Survey Maps from the [National Library of Scotland](https://www.nls.uk/)
+- Scans of 19th-century river pollution reports from ProQuest's [UK Parliamentary Papers](https://parlipapers.proquest.com/parlipapers)
 - Historic Environment Records datasets of mills in West Yorkshire
-- Vector lines of watercourses in Bradford and West Yorkshire
+- Vector lines of watercourses in Bradford and West Yorkshire from [Friends of Bradford's Becks](https://bradford-beck.org/)
 
 ## Investigation methods/ tools/ code/ software 
 
@@ -60,7 +60,7 @@ Software
 
 ## Outputs  
 
-- Line vectors for watercourses in Bradford and surrounding area
+- Line vectors for historic watercourses in Bradford and surrounding area
 - Felt maps containing watercourses (and some millponds)
 - Geolocated tithe maps for Bradford and surrounding area
 - Database of mills and their responses to 1871 River Pollution Report (Excel spreadsheet)
